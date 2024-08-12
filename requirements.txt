@@ -1,0 +1,8 @@
+geodatasets==2024.7.0
+geopandas==1.0.1
+matplotlib==3.8.0
+numpy==2.0.1
+pandas==2.2.2
+plotly==5.9.0
+seaborn==0.13.2
+streamlit==1.32.0

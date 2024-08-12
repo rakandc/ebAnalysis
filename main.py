@@ -7,15 +7,15 @@ import seaborn as sns
 import plotly.express as px
 import geodatasets
 import geopandas
+import plotly.graph_objects as go
+
+
 
 from urllib.request import urlopen
 import json
 
 import datetime 
 import copy 
-
-# 
-
 
 
 
@@ -64,7 +64,7 @@ def read_in_battery_report(filepath):
     return temp, operationaldf.reset_index(drop=True)
 
 
-filename = './GIS reports and battery identification reports/RPT.00015933.0000000000000000.20240710.132238885.Co-located_Battery_Identification_Report_June_2024 (1).xlsx'
+filename = './resources/RPT.00015933.0000000000000000.20240810.080547317.Co-located_Battery_Identification_Report_July_2024 (1).xlsx'
 planned, operational = read_in_battery_report(filename)
 #
 operational_cumsum = operational.groupby(by=['In Service','Fuel'])['Capacity (MW)*'].sum().unstack().fillna(0).cumsum(axis=0).resample('Y').ffill().reset_index()
@@ -150,7 +150,7 @@ st.plotly_chart(fig)
 
 yearToUse = 2000
 
-fipsdf = pd.read_csv('state_and_county_fips_master.csv')
+fipsdf = pd.read_csv('./resources/state_and_county_fips_master.csv')
 dfWithFips = planned.merge(fipsdf.loc[fipsdf['state']=='TX'][['name', 'fips']], left_on='County', right_on='name', how='left')
 dfWithFips.drop(columns='name', inplace=True)
 fipValues = dfWithFips.loc[dfWithFips['Projected COD'].dt.year>yearToUse].groupby(by=['fips','County'])['Capacity (MW)'].sum().reset_index()
@@ -279,7 +279,7 @@ combined['Date']= pd.to_datetime(combined['Date'])
 
 yearToUse = 2020
 
-fipsdf = pd.read_csv('state_and_county_fips_master.csv')
+fipsdf = pd.read_csv('./resources/state_and_county_fips_master.csv')
 dfWithFips = combined.merge(fipsdf.loc[fipsdf['state']=='TX'][['name', 'fips']], left_on='County', right_on='name', how='left')
 dfWithFips.drop(columns='name', inplace=True)
 fipValues = dfWithFips.loc[dfWithFips['Date'].dt.year>yearToUse].groupby(by=['fips','County'])['Capacity (MW)'].sum().reset_index()
