@@ -1,8 +1,9 @@
 geodatasets==2024.7.0
 geopandas==0.14.0
 matplotlib==3.8.0
-numpy==1.24.4
+numpy==1.26.0
 pandas==2.2.2
 plotly==5.9.0
 seaborn==0.13.2
 streamlit==1.32.0
+setuptools>=65.0.0
